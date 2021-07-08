@@ -1,0 +1,39 @@
+:root{
+    --primary-color: bisque;
+    --secondary-color: rgb(92, 85, 85);
+}
+body {
+    background-color: var(--primary-color);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    padding: 25px;
+}
+h2 {
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+#quiz{
+    padding: 150px;
+    background-color: var(--secondary-color);
+}
+#quiz ul li{
+    list-style: none;
+    line-height: 1.8vw;
+}
+#quiz button{
+    display: inline-flex;
+    background-color: var(--primary-color);
+    
+    
+}
+#submit {
+    display:flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+}
