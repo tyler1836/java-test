@@ -29,20 +29,51 @@ var questions = [{
 }
 ]
 var questionsCounter = 0;
+var score = 0;
+var highScore = score + timeCount;
+var timeCount = 60;
 
 
-btnEl.addEventListener("click", start)
 var start = function () {
-    timerEl.setTimeout(() => {
+    var time = setInterval(() => {
+        timerEl.textContent = "Time remaining: " + timeCount;
+        timeCount--;
         
-    }, 6000);
+
+        if(timeCount < 0){
+            clearInterval(time)
+        }
+    }, 1000);
+    
     for (let i = 0; i < questions[questionsCounter].options.length; i++) {
-        questionsEl.innerText = questions.question[i];
-        choicesEl.innerText = questions[questionsCounter].options[i]
-        console.log(questions[i].options[1]);
+        console.log(questions[i].question);
+        console.log(questions[questionsCounter].options[i])
+        var list = document.createElement("LI").innerHTML = questions[questionsCounter].options[i]
+        //choicesEl.innerHTML = questions[questionsCounter].options[i]
+        choicesEl.append(list);
     }
+    questionsEl.innerHTML = questions[i].question;
+    if(answer === questions.question.answer[i]){
+        alert("Correct")
+        score++
+    }
+    if(i > questions){
+        alert("Congrats you've finished with a score of " + highScore)
+        savedScore();
+    }
+    else {
+        alert("Incorrect 10 seconds deducted")
+        timeCount - 10;
+    }
+
 }
 
+var savedScore = function(){
+    localStorage.setItem("score", JSON.stringify(highScore));
+}
+btnEl.addEventListener("click", start);
+
+console.log(questions[0].options[1]);
 
 
 
