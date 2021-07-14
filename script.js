@@ -1,7 +1,9 @@
 var btnEl = document.getElementById("submit");
 var questionsEl = document.getElementById("question");
-var choicesEl = document.getElementById("choices");
+var choicesEl = document.getElementById("list");
 var timerEl = document.getElementById("timer");
+
+
 var questions = [{
     question: "How do you display something in the console.",
     options: ["display", "console.log()", "show()", "var ="],
@@ -28,52 +30,89 @@ var questions = [{
     answer: 3,
 }
 ]
-var questionsCounter = 0;
+
+var questionsCounter = -1;
 var score = 0;
 var highScore = score + timeCount;
-var timeCount = 60;
+var timeCount = 120;
+var quizOver = false;
 
 
-var start = function () {
+function displayQuestions() {
+    console.log(questions[questionsCounter].question);
+    console.log(questions[questionsCounter].options);
+    var q = document.createElement("h2");
+    var q2 = document.createTextNode(questions[questionsCounter].question);
+    q.append(q2);
+    questionsEl.append(q);
+
+    var radio = document.createElement("input");
+    radio.type = "radio";
+    radio.checked = "checked";
+    radio.id = "answer"
+
+    var list = document.createElement("LI");
+    var listItems = document.createTextNode(questions[questionsCounter]);
+    list.append(radio);
+    list.append(listItems);
+    choicesEl.append(list);
+    // if(answer === questions.question.answer){
+    //     alert("Correct")
+    //     score++
+    // }
+    // if(questionsCounter > questions){
+    //     alert("Congrats you've finished with a score of " + highScore)
+    //     savedScore();
+    // }
+    // else {
+    //     alert("Incorrect 10 seconds deducted")
+    //     timeCount - 10;
+    // }
+}
+$("#next").on("click", function () {
+    questionsCounter++;
+    console.log(questionsCounter)
+    if (questionsCounter >= 5) {
+
+        $("#next").attr('disabled', 'disabled')
+    }
+    displayQuestions();
+});
+
+$("#prev").on("click", function () {
+
+    questionsCounter--;
+
+        if (questionsCounter === 0) {
+            $("#prev").attr('disabled', 'disabled')
+        }
+        displayQuestions();
+});
+
+function time (){
     var time = setInterval(() => {
         timerEl.textContent = "Time remaining: " + timeCount;
         timeCount--;
-        
 
-        if(timeCount < 0){
+        if (timeCount = 0) {
             clearInterval(time)
         }
     }, 1000);
-    
-    for (let i = 0; i < questions[questionsCounter].options.length; i++) {
-        console.log(questions[i].question);
-        console.log(questions[questionsCounter].options[i])
-        var list = document.createElement("LI").innerHTML = questions[questionsCounter].options[i]
-        //choicesEl.innerHTML = questions[questionsCounter].options[i]
-        choicesEl.append(list);
-    }
-    questionsEl.innerHTML = questions[i].question;
-    if(answer === questions.question.answer[i]){
-        alert("Correct")
-        score++
-    }
-    if(i > questions){
-        alert("Congrats you've finished with a score of " + highScore)
-        savedScore();
-    }
-    else {
-        alert("Incorrect 10 seconds deducted")
-        timeCount - 10;
-    }
 
 }
 
-var savedScore = function(){
+
+var start = function () {
+    time();
+
+}
+
+var savedScore = function () {
     localStorage.setItem("score", JSON.stringify(highScore));
 }
 btnEl.addEventListener("click", start);
 
-console.log(questions[0].options[1]);
+
 
 
 

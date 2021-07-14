@@ -1,6 +1,6 @@
 :root{
-    --primary-color: bisque;
-    --secondary-color: rgb(92, 85, 85);
+    --primary-color: #ffe77aff;
+    --secondary-color: #2c5f2dff;
 }
 body {
     background-color: var(--primary-color);
@@ -10,12 +10,20 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--secondary-color);
     padding: 25px;
+    color: var(--secondary-color);
+    text-shadow: black;
+    text-decoration-line: underline;
+}
+#timer{
+    color: var(--secondary-color);
+    text-decoration-line: underline;
 }
 h2 {
     display: flex;
     justify-content: space-evenly;
+    color: var(--primary-color);
+    text-decoration-line: underline;
     
 }
 #quiz{
@@ -34,6 +42,13 @@ h2 {
 }
 #submit {
     display:flex;
-    justify-content: flex-end;
-    margin-top: 50px;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+li{
+    color: var(--primary-color);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
+    margin: 15px auto;
 }
