@@ -21,8 +21,8 @@ h1 {
 }
 h2 {
     display: flex;
-    justify-content: space-evenly;
-    color: var(--primary-color);
+    justify-content: space-around;
+    color: var(--secondary-color);
     text-decoration-line: underline;
     
 }

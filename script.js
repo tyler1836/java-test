@@ -5,7 +5,7 @@ var timerEl = document.getElementById("timer");
 
 
 var questions = [{
-    question: "How do you display something in the console.",
+    question: "How do you display something in the console?",
     options: ["display", "console.log()", "show()", "var ="],
     answer: 2,
 },
@@ -20,7 +20,7 @@ var questions = [{
     answer: 1,
 },
 {
-    question: "True or False: You can use .html to change an element in the dom?",
+    question: "True or False: You can use .innerHtml to change an element in the dom?",
     options: ["True", "False"],
     answer: 1,
 },
@@ -31,31 +31,35 @@ var questions = [{
 }
 ]
 
-var questionsCounter = -1;
+var questionsCounter = 0;
 var score = 0;
 var highScore = score + timeCount;
 var timeCount = 120;
 var quizOver = false;
 
 
+
 function displayQuestions() {
     console.log(questions[questionsCounter].question);
-    console.log(questions[questionsCounter].options);
-    var q = document.createElement("h2");
+    var q = document.createElement("h3");
     var q2 = document.createTextNode(questions[questionsCounter].question);
     q.append(q2);
     questionsEl.append(q);
 
-    var radio = document.createElement("input");
-    radio.type = "radio";
-    radio.checked = "checked";
-    radio.id = "answer"
+   
+    for (let value of questions[questionsCounter].options ) {
 
-    var list = document.createElement("LI");
-    var listItems = document.createTextNode(questions[questionsCounter]);
-    list.append(radio);
-    list.append(listItems);
-    choicesEl.append(list);
+        var check = document.createElement("input");
+        check.type = "checkbox";
+        check.id = "answer";
+    
+        var list = document.createElement("LI");
+        var listItems = document.createTextNode(questions[questionsCounter].options);
+        list.append(check);
+        list.append(listItems);
+        choicesEl.append(list);
+    }
+
     // if(answer === questions.question.answer){
     //     alert("Correct")
     //     score++
@@ -69,7 +73,11 @@ function displayQuestions() {
     //     timeCount - 10;
     // }
 }
+
+
 $("#next").on("click", function () {
+    //event.preventDefault();
+    
     questionsCounter++;
     console.log(questionsCounter)
     if (questionsCounter >= 5) {
@@ -83,27 +91,30 @@ $("#prev").on("click", function () {
 
     questionsCounter--;
 
-        if (questionsCounter === 0) {
-            $("#prev").attr('disabled', 'disabled')
-        }
-        displayQuestions();
+    if (questionsCounter <= 0) {
+        $("#prev").attr('disabled', 'disabled')
+    }
+    else {
+        $("#prev").removeAttr('disabled', 'disabled')
+    }
+    displayQuestions();
 });
 
-function time (){
-    var time = setInterval(() => {
+var timer = function time() {
+    var time = setInterval(function () {
         timerEl.textContent = "Time remaining: " + timeCount;
         timeCount--;
 
-        if (timeCount = 0) {
+        if (timeCount <= 0) {
             clearInterval(time)
         }
     }, 1000);
-
+displayQuestions();
 }
 
 
 var start = function () {
-    time();
+    timer();
 
 }
 
