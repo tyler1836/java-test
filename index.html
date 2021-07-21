@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,28 +8,28 @@
     <link rel="stylesheet" href="style.css">
     <title>Javascript Quiz</title>
 </head>
+
 <body>
     <div>
-    <h1>Test your knowledge with Javascript</h1>
+        <h1>Test your knowledge with Javascript</h1>
     </div>
-    
+
     <div>
-        <button id="submit">Start</button>
         <h2 id="timer">Time Remaining:</h2>
     </div>
-    <div id="quiz">
-        <h3 id="question"></h3>
-        <ul >
-            <li id="list"></li>
-          
-        </ul>
-        <button id="prev">Prev</button>
-        <button id="next">Next</button>
+    <div id="container">
+        <div id="questions-card" class="hide">
+            <div id="question">Question</div>
+            <div id="answers">   
+            </div>
+            
+            <!-- <button id="prev">Prev</button> -->
+            <button id="next" class="hide">Next</button>
         </div>
-    <div>
-    
+        <button id="submit">Start</button>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

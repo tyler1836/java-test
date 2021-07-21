@@ -1,106 +1,53 @@
-var btnEl = document.getElementById("submit");
-var questionsEl = document.getElementById("question");
-var choicesEl = document.getElementById("list");
-var timerEl = document.getElementById("timer");
-
+var startEl = document.getElementById("submit")
+var questionCardEl = document.getElementById("questions-card")
+var nextEl = document.getElementById("next")
+var questionsEl = document.getElementById("question")
+var answerEl = document.getElementById("answer")
+var answersEl = document.getElementById("answers")
+var timerEl = document.getElementById("timer")
 
 var questions = [{
     question: "How do you display something in the console?",
-    options: ["display", "console.log()", "show()", "var ="],
-    answer: 2,
+    options: [{ text: "display", correct: false },
+    { text: "console.log()", correct: true },
+    { text: "show()", correct: false },
+    { text: "var =", correct: false }]
 },
 {
     question: "To add an event to a button click what built in function is used?",
-    options: ["addEvent", "click", "buttonOn", "addEventListener"],
-    answer: 4,
+    options: [{ text: "addEvent", correct: false },
+    { text: "click", correct: false },
+    { text: "buttonOn", correct: false },
+    { text: "addEventListener", correct: true }]
 },
 {
     question: "What phrase is used to retrieve something out of localStorage?",
-    options: ["getItem", "setItem", "retrieveStorage", "access-storage"],
-    answer: 1,
+    options: [{ text: "getItem", correct: true },
+    { text: "setItem", correct: false },
+    { text: "retrieveStorage", correct: false },
+    { text: "access-storage", correct: false }]
 },
 {
     question: "True or False: You can use .innerHtml to change an element in the dom?",
-    options: ["True", "False"],
-    answer: 1,
+    options: [{ text: "True", correct: true },
+    { text: "False", correct: false }]
 },
 {
-    question: "What does getElementById do?",
-    options: ["Shows elements Id", "Adds a new element with an Id", "Links a javascript variable with a DOM element", "Tells you where an element is on the HTML page"],
-    answer: 3,
+    question: "What does document.getElementById() do?",
+    options: [{ text: "Shows elements Id", correct: false },
+    { text: "Adds a new element with an Id", correct: false },
+    { text: "Links a javascript variable with a DOM element", correct: true },
+    { text: "Tells you where an element is on the HTML page", correct: false }]
 }
 ]
 
-var questionsCounter = 0;
-var score = 0;
-var highScore = score + timeCount;
-var timeCount = 120;
-var quizOver = false;
+var currentQuestion = 0;
+var timeCount = 60;
 
-
-
-function displayQuestions() {
-    console.log(questions[questionsCounter].question);
-    var q = document.createElement("h3");
-    var q2 = document.createTextNode(questions[questionsCounter].question);
-    q.append(q2);
-    questionsEl.append(q);
-
-   
-    for (let value of questions[questionsCounter].options ) {
-
-        var check = document.createElement("input");
-        check.type = "checkbox";
-        check.id = "answer";
-    
-        var list = document.createElement("LI");
-        var listItems = document.createTextNode(questions[questionsCounter].options);
-        list.append(check);
-        list.append(listItems);
-        choicesEl.append(list);
-    }
-
-    // if(answer === questions.question.answer){
-    //     alert("Correct")
-    //     score++
-    // }
-    // if(questionsCounter > questions){
-    //     alert("Congrats you've finished with a score of " + highScore)
-    //     savedScore();
-    // }
-    // else {
-    //     alert("Incorrect 10 seconds deducted")
-    //     timeCount - 10;
-    // }
-}
-
-
-$("#next").on("click", function () {
-    //event.preventDefault();
-    
-    questionsCounter++;
-    console.log(questionsCounter)
-    if (questionsCounter >= 5) {
-
-        $("#next").attr('disabled', 'disabled')
-    }
-    displayQuestions();
-});
-
-$("#prev").on("click", function () {
-
-    questionsCounter--;
-
-    if (questionsCounter <= 0) {
-        $("#prev").attr('disabled', 'disabled')
-    }
-    else {
-        $("#prev").removeAttr('disabled', 'disabled')
-    }
-    displayQuestions();
-});
-
-var timer = function time() {
+function startQuiz() {
+    score = 0;
+    startEl.classList.add("hide")
+    questionCardEl.classList.remove("hide")
     var time = setInterval(function () {
         timerEl.textContent = "Time remaining: " + timeCount;
         timeCount--;
@@ -109,24 +56,70 @@ var timer = function time() {
             clearInterval(time)
         }
     }, 1000);
-displayQuestions();
-}
 
-
-var start = function () {
-    timer();
+    next()
 
 }
 
-var savedScore = function () {
-    localStorage.setItem("score", JSON.stringify(highScore));
+function next() {
+    reset();
+    questionShow(questions[currentQuestion]);
+
 }
-btnEl.addEventListener("click", start);
+function questionShow(question) {
+    questionsEl.innerText = question.question
+    question.options.forEach(options => {
+        var button = document.createElement("button")
+        button.innerText = options.text
+        button.classList.add("answer")
+        if (options.correct) {
+            button.dataset.correct = options.correct
+        }
+        button.addEventListener("click", answer)
+        answersEl.appendChild(button)
+    })
+
+}
+function reset() {
+    nextEl.classList.add("hide");
+    while (answersEl.firstChild) {
+        answersEl.removeChild(answersEl.firstChild)
+    }
+}
+function answer(e) {
+    var selected = e.target;
+    var correct = selected.dataset.correct
+    Array.from(answersEl.children).forEach(button => {
+        right(button, button.dataset.correct)
+    })
+    if (questions.length > currentQuestion + 1) {
+        nextEl.classList.remove("hide")
+    }
+  
+    else {
+
+        questionsEl.innerText = "Congrats you've finished! Your score is " + timeCount + "."
+        saveScore();
+        timeCount = 0;
+        
+    }
+
+
+}
+
+function right(correct) {
+    if(correct){
+        timeCount += 20;}
+}
+
+function saveScore() {
+    localStorage.setItem("score", JSON.stringify(timeCount))
+}
 
 
 
-
-
-
-
-
+nextEl.addEventListener("click", () => {
+    currentQuestion++;
+    next()
+})
+startEl.addEventListener("click", startQuiz)

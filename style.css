@@ -1,10 +1,11 @@
+
 :root{
-    --primary-color: #ffe77aff;
-    --secondary-color: #2c5f2dff;
+    --secondary-color: #21d0b2;
+    --primary-color: #2f455c;
 }
 body {
     background-color: var(--primary-color);
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 h1 {
     display: flex;
@@ -12,12 +13,53 @@ h1 {
     align-items: center;
     padding: 25px;
     color: var(--secondary-color);
-    text-shadow: black;
     text-decoration-line: underline;
+    font-weight: lighter;
 }
 #timer{
     color: var(--secondary-color);
     text-decoration-line: underline;
+    font-weight: lighter;
+}
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 250px;
+    height: 250px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 5px rgba(250, 249, 249, 0.973);
+    background-color: var(--secondary-color); 
+}
+#question{
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+#answers{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 15px;
+    margin: 5px;
+}
+.answer{
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.849);
+    background-color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.answer:hover{
+    background-color: #1dcdfe;
+}
+#submit, #next{
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.849);
+    background-color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+#submit:hover, #next:hover{
+    background-color: #1dcdfe;
 }
 h2 {
     display: flex;
@@ -26,29 +68,7 @@ h2 {
     text-decoration-line: underline;
     
 }
-#quiz{
-    padding: 150px;
-    background-color: var(--secondary-color);
-}
-#quiz ul li{
-    list-style: none;
-    line-height: 1.8vw;
-}
-#quiz button{
-    display: inline-flex;
-    background-color: var(--primary-color);
-    
-    
-}
-#submit {
-    display:flex;
-    justify-content: space-evenly;
-    align-items: center;
-    
-}
-li{
-    color: var(--primary-color);
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 20px;
-    margin: 15px auto;
+
+.hide{
+    display: none;
 }
